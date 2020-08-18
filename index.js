@@ -25,22 +25,20 @@ console.log(worldCupFinal[0]["Win conditions"]);
 
 /* Task 2: Create a function called  getFinals that takes `data` as an argument and returns an array of objects with only finals data */
 
+
 function getFinals(data) {
-    const mappedData = data.filter(function(state) {
-        return state["Stage"] === "Final";
+    const finalsData = data.filter(function(matchData) {
+        return matchData["Stage"] === "Final";
     });
-    return mappedData;
+    return finalsData
 }
 
 console.log("");
-console.log("Task 2:");
+console.log("Task 2:")
 
-const output = getFinals(fifaData);
-console.log(output);
+console.log(getFinals(fifaData));
 
-// const mappedData = fifaData.map(function(state) {
-//     return state["Year"];
-// });
+
 
 
 /* Task 3: Implement a higher-order function called `getYears` that accepts the callback function `getFinals`, and returns an array called `years` containing all of the years in the dataset */
@@ -62,8 +60,14 @@ function getWinners(getFinals) {
     const finalWinners = getFinals(fifaData).map(function(matchData) {
         if (matchData["Home Team Goals"] > matchData["Away Team Goals"]) {
             return matchData["Home Team Name"];
-        } else {
+        } else if (matchData["Home Team Goals"] < matchData["Away Team Goals"]) {
             return matchData["Away Team Name"];
+        } else {
+            if ((matchData["Win conditions"].split(" ")).includes(matchData["Home Team Name"])) {
+                return matchData["Home Team Name"];
+            } else {
+                return matchData["Away Team Name"];
+            };
         };
     });
     return finalWinners;
@@ -90,12 +94,6 @@ function getWinnersByYear(getWinners, getYears) {
 console.log("");
 console.log("Task 5:");
 getWinnersByYear(getWinners, getYears);
-
-
-
-
-
-
 
 
 /* Task 6: Write a function called `getAverageGoals` that accepts a parameter `data` and returns the the average number of home team goals and away team goals scored per match (Hint: use .reduce and do this in 2 steps) */
@@ -149,3 +147,5 @@ function badDefense(/* code here */) {
 badDefense();
 
 /* If you still have time, use the space below to work on any stretch goals of your chosing as listed in the README file. */
+
+
