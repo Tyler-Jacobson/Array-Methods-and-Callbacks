@@ -102,7 +102,10 @@ function getAverageGoals(data) {
     const homeGoals = data.reduce(function(accumulator, item){
         return (accumulator += item["Home Team Goals"]);
     }, 0);
-    return homeGoals / data.length;
+    const awayGoals = data.reduce(function(accumulator, item){
+        return (accumulator += item["Away Team Goals"]);
+    }, 0);
+    return (homeGoals + awayGoals) / (data.length * 2);
 };
 
 console.log("");
